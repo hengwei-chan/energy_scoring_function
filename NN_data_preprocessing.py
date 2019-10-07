@@ -17,11 +17,8 @@ def filter_cpx(data, k):
 def tables(name, mol_atoms, atypes, k):
     ranges = list(range(0, len(mol_atoms), 500))
     ranges = [[ranges[i], ranges[i + 1]] for i in range(0, len(ranges) - 1)] + [[ranges[-1], len(mol_atoms)]]
-    load_files = []
     for rdx, r in enumerate(ranges):
-        load_file = name + '_' + str(rdx) + '.txt'
-        load_files.append(load_file)
-
+        arr_file = name + '_' + str(rdx) + '.txt'
         df = pd.DataFrame(columns=atypes)
         row_input_100 = {}
         for a in atypes:
@@ -54,7 +51,7 @@ def tables(name, mol_atoms, atypes, k):
                 result = result.append(row_input_100, ignore_index=True)
             arr.append(result.values)
         arr = np.array(arr)
-        with open(load_file + '.json', 'w') as fl:
+        with open(arr_file + '.json', 'w') as fl:
             json.dump(arr.tolist(), fl)
 
 def tables2(name, cp):
