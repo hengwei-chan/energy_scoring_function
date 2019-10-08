@@ -22,15 +22,11 @@ def table(path):
     r = 7 #number of intervals
     ttm = list(filter(lambda x: (x.startswith('train')) and not (x.endswith('d.csv')), os.listdir(path)))
     tvm = list(filter(lambda x: (x.startswith('test')) and not (x.endswith('d.csv')), os.listdir(path)))
-    xmt, colsmt = group(path, ttm[:1])
-    xmv, colsmv = group(path, tvm)
+    xmt = group(path, ttm)
+    xmv = group(path, tvm)
 
     yt, nat, dft = read_table2(path + 'traind.csv')
     yv, nav, dfv = read_table2(path + 'testd.csv')
-    colsm = np.unique(np.array([i for j in colsmt for i in j]))
-    xmt = [make_x_matrix(colsm, i, colsmt[idx]) for idx, i in enumerate(xmt)]
-    xmv = [make_x_matrix(colsm, i, colsmv[idx]) for idx, i in enumerate(xmv)]
-
     mins = [min([i[:, x].min() for i in xmt]) for x in range(xmt[0].shape[1])]
     maxs = [max([max([j for j in i[:, x] if j!=100]) for i in xmt if i[:, x].mean()!=100.0]) for x in range(xmt[0].shape[1])]
     rl = [(maxs[i]-mins[i])/(r+1) for i in range(xmt[0].shape[1])]
@@ -153,36 +149,22 @@ class MyLayer(Layer):
         return (input_shape[0], self.output_dim)
 
 def group(path, tables):
-    all_cols = []
     all_x = []
     for table in tables:
-        X, cols = read_table1(path, table)
-        all_cols.append(cols)
-        all_x.append(X)
-    return all_x, all_cols
-
-def read_table1(dir, table):
-    df = pd.read_csv(dir + table, sep=' ')
-    df = df.drop(['Unnamed: 0'], axis=1)
-    cols = [i for i in df.columns]
-    X = df.iloc[:, :]
-    del df
-    return X, cols
+        with open(path+table, 'r') as fl:
+            arr = json.load(fl)
+        all_x.append(np.array(arr))
+    print(all_x[0].shape)
+    input_tables = []
+    for r in range(130):
+        input_tables.append(np.vstack([i[:, r, :] for i in all_x]))
+    return input_tables
 
 def read_table2(dir):
     df = pd.read_csv(dir, sep=' ')
     df = df.drop(['Unnamed: 0'], axis=1)
     be, la = df['exp_binding_energy'], df['num_ligand_atoms']
     return be, la, df
-
-def make_x_matrix(cols_base, x, cols):
-    x = x.values
-    w = np.full((x.shape[0], len(cols_base)), 100.0)
-    for adx, a in enumerate(cols_base):
-        if a in cols:
-            w[:, adx] = x[:,cols.index(a)]
-    del x
-    return w
 
 dir='data_files/NNdata/'
 table(dir)
