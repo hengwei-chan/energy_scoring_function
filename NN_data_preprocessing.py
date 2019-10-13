@@ -1,14 +1,14 @@
-import pandas as pd, numpy as np, pickle, os
+import pandas as pd, numpy as np, pickle, os, json
 
 def filter_cpx(data, k):
     data_red = []
     for idx in range(len(data)):
         unique = {}
         for adx, a in enumerate(data[idx][0]):
-            if a[-1] not in unique:
-                unique[a[-1]] = [a[0]]
+            if a[0] not in unique:
+                unique[a[0]] = [a[1]]
             else:
-                unique[a[-1]].append(a[0])
+                unique[a[0]].append(a[1])
         max_unique = max([len(unique[i]) for i in unique])
         if max_unique <=k:
             data_red.append(data[idx])
@@ -28,11 +28,11 @@ def tables(name, mol_atoms, atypes, k):
         for i in mol_atoms[r[0]:r[1]]:
             unique = {}
             for adx, a in enumerate(i):
-                if a[-1] in atypes:
-                    if a[-1] not in unique:
-                        unique[a[-1]] = [a[2]]
+                if a[0] in atypes:
+                    if a[0] not in unique:
+                        unique[a[0]] = [a[1]]
                     else:
-                        unique[a[-1]].append(a[2])
+                        unique[a[0]].append(a[1])
 
             df_m = pd.DataFrame(columns=[i for i in unique])
             n = max([len(unique[i]) for i in unique])
@@ -59,7 +59,7 @@ def tables2(name, cp):
     df['num_ligand_atoms'], df['exp_binding_energy'], df['complex_name'] = cp[0], cp[1], cp[2]
     df.to_csv(name + '.csv', sep=' ', mode='w')
 
-def main(data, name, atom_pair_types=0):
+def main(data, name, atom_pair_types = 0):
     k = 130
     data_red = filter_cpx(data, k) #choising of complexes having no more than 130 atom pairs of the same type
     atom_pairs = [i[0] for i in data_red]
@@ -67,10 +67,10 @@ def main(data, name, atom_pair_types=0):
     exp_binding_energy = np.array([i[2] for i in data_red])
     complex_name = np.array([i[3] for i in data_red])
     if atom_pair_types == 0:
-        atom_pair_types = np.unique(np.array([a for m in [[j[-1] for j in i] for i in atom_pairs] for a in m]))
+        atom_pair_types = np.unique(np.array([a for m in [[j[0] for j in i] for i in atom_pairs] for a in m]))
     tables('data_files/NNdata/' + name, atom_pairs, atom_pair_types, k)
     tables2('data_files/NNdata/' + name + 'd', [num_ligand_atoms, exp_binding_energy, complex_name])
-    returm atom_pair_types
+    return atom_pair_types
 
 with open('data_files/initial_structural_data/PDBBind_refined_subset.pkl', 'rb') as ff:
     train_data = pickle.load(ff)
