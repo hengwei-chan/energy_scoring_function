@@ -35,8 +35,8 @@ def data_extract(receptor_atoms, ligand_atoms):
         for ldx, la in enumerate(ligand_atoms):
             d = round(f.distance(la[1:], ra[1:]), 2)
             if d <= 5.0:
-                close.append([rdx, ldx, d, ra[0], la[0]])
-    close = [i[:-2] + [atom_pair(i[-2:])] for i in close]
+                close.append([d, ra[0], la[0]])
+    close = [[atom_pair(i[-2:]), i[0]] for i in close]
     return close
 
 def main(directory, cpxs, be):
@@ -50,19 +50,22 @@ def main(directory, cpxs, be):
         close = data_extract(rec_atoms, lig_atoms)
         if close != []:
             data.append([close, len(lig_atoms), cpx_en[0][1], cpx])
-    with open('data_files/initial_structural_data/PDBBind_refined_subset.pkl', 'wb') as ff:
+    #with open('data_files/initial_structural_data/PDBBind_refined_subset.pkl', 'wb') as ff:
+    with open('data_files/initial_structural_data/casf2016.pkl', 'wb') as ff:
         pickle.dump(data, ff)
 
 tolist = np.ndarray.tolist
 prefix = {'fM': 1e-15, 'mM': 1e-3, 'nM': 1e-9, 'pM': 1e-12, 'uM': 1e-6}
-directory = 'C:/Users/raulia/Downloads/refined-set/'
-#directory_coreset = directory_casf + 'coreset/'
-cpxs = list(filter(lambda x: len(x) == 4, os.listdir(directory))) #list of folders containing complexes from database
+#directory = 'C:/Users/raulia/Downloads/refined-set/'
+directory = 'C:/Users/raulia/Documents/CASF-2016/'
+directory_coreset = directory + 'coreset/'
+cpxs = list(filter(lambda x: len(x) == 4, os.listdir(directory_coreset))) #list of folders containing complexes from database
 
-be = f.readfile(directory + 'index/INDEX_refined_data.2018', 'l')[6:]
+#be = f.readfile(directory + 'index/INDEX_refined_data.2018', 'l')[6:]
+be = f.readfile(directory + 'power_scoring/CoreSet.dat', 'l')[1:]
 be = [i.split() for i in be]
 be = [[i[0], float(i[3]), i[4]] for i in be]
 be = [i[:-1] + [i[-1].split('=')[1]]  for i in be if '=' in i[-1]]
 be = [i[:2] + [round(0.593 * math.log(float(i[-1][:-2]) * prefix[i[-1][-2:]]), 2)] for i in be] #retrieving exp binding energies from database in kcal/mol
 
-main(directory, cpxs, be)
+main(directory_coreset, cpxs, be)
