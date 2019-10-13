@@ -21,17 +21,17 @@ np.set_printoptions(threshold=sys.maxsize, suppress=True)
 def table(path):
     ttm = list(filter(lambda x: (x.startswith('train')) and not (x.endswith('d.csv')), os.listdir(path)))
     tvm = list(filter(lambda x: (x.startswith('test')) and not (x.endswith('d.csv')), os.listdir(path)))
-    xmt = group(path, ttm)
+    #xmt = group(path, ttm)
     xmv = group(path, tvm)
 
-    yt, nat, dft = read_table2(path + 'traind.csv')
+    #yt, nat, dft = read_table2(path + 'traind.csv')
     yv, nav, dfv = read_table2(path + 'testd.csv')
 
-    mins = [min([i[:, x].min() for i in xmt]) for x in range(xmt[0].shape[1])]
-    maxs = [max([max([j for j in i[:, x] if j!=100]) for i in xmt if i[:, x].mean()!=100.0]) for x in range(xmt[0].shape[1])]
-    avgs = [mins[i]+(maxs[i]-mins[i])/2 for i in range(xmt[0].shape[1])]
-    w = [np.array([avgs]), np.zeros((xmt[0].shape[1],1))]
-    w += [np.array([[-0.03]]), np.array([0.69]), np.array([[1.1]]), np.array([-11.7])]
+    #mins = [min([i[:, x].min() for i in xmt]) for x in range(xmt[0].shape[1])]
+    #maxs = [max([max([j for j in i[:, x] if j!=100]) for i in xmt if i[:, x].mean()!=100.0]) for x in range(xmt[0].shape[1])]
+    #avgs = [mins[i]+(maxs[i]-mins[i])/2 for i in range(xmt[0].shape[1])]
+    #w = [np.array([avgs]), np.zeros((xmt[0].shape[1],1))]
+    #w += [np.array([[-0.03]]), np.array([0.69]), np.array([[1.1]]), np.array([-11.7])]
 
     #optmize_weights_whole(xmt, nat, yt, w)
     check_weights(xmv, nav, yv, dfv)
@@ -140,6 +140,7 @@ class MyLayer(Layer):
 
     def compute_output_shape(self, input_shape):
         return (input_shape[0], self.output_dim)
+
 
 def group(path, tables):
     all_x = []
