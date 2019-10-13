@@ -27,6 +27,7 @@ def table(path):
 
     yt, nat, dft = read_table2(path + 'traind.csv')
     yv, nav, dfv = read_table2(path + 'testd.csv')
+
     mins = [min([i[:, x].min() for i in xmt]) for x in range(xmt[0].shape[1])]
     maxs = [max([max([j for j in i[:, x] if j!=100]) for i in xmt if i[:, x].mean()!=100.0]) for x in range(xmt[0].shape[1])]
     rl = [(maxs[i]-mins[i])/(r+1) for i in range(xmt[0].shape[1])]
