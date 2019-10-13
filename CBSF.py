@@ -7,15 +7,16 @@ with open('data_files/weights/SF' + str(r) + '_weights.pkl', 'rb') as ff:
 
 with open('data_files/initial_structural_data/casf2016.pkl', 'rb') as ff:
     test_data = pickle.load(ff)
+print(test_data[0])
 
 if r==1:
     w = [w]
 data_pred = []
 for cpx in test_data:
     int_ergies = []
-    pairs = [[i[2], i[3]] for i in cpx[0]]
+    pairs = cpx[0]
     for dx, dict in enumerate(w):
-        p_int = [[pair, dict[pair[-1]][1]] for pair in pairs if (pair[-1] in dict) and (pair[0]<=dict[pair[-1]][0])]
+        p_int = [[pair, dict[pair[0]][1]] for pair in pairs if (pair[0] in dict) and (pair[1]<=dict[pair[0]][0])]
         pairs = [pair for pair in pairs if pair not in [i[0] for i in p_int]]
         #print(dx, len(p_int))
         g1 = len(p_int)*dict['a1b1'][0]+dict['a1b1'][1]
