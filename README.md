@@ -16,3 +16,5 @@ Figure 1. Accuracy of the scoring functions with soft cutoffs tested on CASF-201
 ![formula1](https://github.com/rsyrlyb/CBSF/blob/master/Figures/hard_cutoffs.png)
 
 Figure 2. Accuracy of the scoring functions with hard cutoffs tested on CASF-2016 benchmark
+
+Distinguishing feature of the presented empirical scoring functions is that all parameters and coefficients of the scoring functions are found by means of the neural networks.  The architecture of the neural networks can be found in “files_Neural_network”.
