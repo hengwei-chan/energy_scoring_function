@@ -18,3 +18,5 @@ Figure 1. Accuracy of the scoring functions with soft cutoffs tested on CASF-201
 Figure 2. Accuracy of the scoring functions with hard cutoffs tested on CASF-2016 benchmark
 
 Distinguishing feature of the presented empirical scoring functions is that all parameters and coefficients of the scoring functions are found by means of the neural networks.  The architecture of the neural networks can be found in “files_Neural_network”.
+
+[1] Su, M., Yang, Q., Du, Y., Feng, G., Liu, Z., Li, Y., & Wang, R. (2019). Comparative Assessment of Scoring Functions: The CASF-2016 Update. Journal of Chemical Information and Modeling, 59(2), 895–913. https://doi.org/10.1021/acs.jcim.8b00545
