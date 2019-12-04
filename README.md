@@ -9,6 +9,6 @@ where A and B are the atoms at the ligand (L)-protein (P) interface, R<sub>AB</s
 In soft cutoff versions number of atom pairs are calculated according by taking into account a transition zone of 0.5 Å if the values of R<sup>0</sup> (T<sub>A</sub>;T<sub>B</sub>) and R<sub>AB</sub> are close:
 ![formula1](https://github.com/rsyrlyb/CBSF/blob/master/Figures/f3.png)
 
-Scoring functions were tested on 285 complexes of CASF-2016 benchmark set [1]. These complexes were excluded from the training set during development of the method. Performance of developed scoring functions on the test set complexes comprising mean absolute error (MAE), median error, Pearson’s correlation coefficient R, standard deviation (\sigma ), Spearman correlation coefficient (SP), Kendall correlation coefficient (τ) and predictive index (PI) are presented in Figure 1-2.
+Scoring functions were tested on 285 complexes of CASF-2016 benchmark set [1]. These complexes were excluded from the training set during development of the method. Performance of developed scoring functions on the test set complexes comprising mean absolute error (MAE), median error, Pearson’s correlation coefficient R, \sigma standard deviation (\sigma ), Spearman correlation coefficient (SP), Kendall correlation coefficient (τ) and predictive index (PI) are presented in Figure 1-2.
 ![formula1](https://github.com/rsyrlyb/CBSF/blob/master/Figures/soft_cutoffs.png)
 ![formula1](https://github.com/rsyrlyb/CBSF/blob/master/Figures/hard_cutoffs.png)
