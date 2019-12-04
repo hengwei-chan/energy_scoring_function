@@ -11,6 +11,8 @@ In soft cutoff versions number of atom pairs are calculated according by taking 
 
 Scoring functions were tested on 285 complexes of CASF-2016 benchmark set [1]. These complexes were excluded from the training set during development of the method. Performance of developed scoring functions on the test set complexes comprising mean absolute error (MAE), median error, Pearson’s correlation coefficient R, standard deviation (\sigma), Spearman correlation coefficient (SP), Kendall correlation coefficient (τ) and predictive index (PI) are presented in Figure 1-2.
 ![formula1](https://github.com/rsyrlyb/CBSF/blob/master/Figures/soft_cutoffs.png)
+
 Figure 1. Accuracy of the scoring functions with soft cutoffs tested on CASF-2016 benchmark
 ![formula1](https://github.com/rsyrlyb/CBSF/blob/master/Figures/hard_cutoffs.png)
+
 Figure 2. Accuracy of the scoring functions with hard cutoffs tested on CASF-2016 benchmark
