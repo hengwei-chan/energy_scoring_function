@@ -1,3 +1,4 @@
 # CBSF
-Scoring function for estimation of binding energies between proteins and small molecules
-![formula 1](https://raw.github.com/rsyrlyb/CBSF/Figures/f1.png")
+Scoring function for estimation of binding energies between proteins and small molecules.
+
+![formula1](./Figures/f1.png")
